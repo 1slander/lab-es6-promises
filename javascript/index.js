@@ -29,8 +29,6 @@
 
 // Iteration 1 - using callbacks
 getInstruction("mashedPotatoes",0,(step0)=>{
-  
-  document.querySelector("#mashedPotatoesImg").removeAttribute("hidden");
   document.querySelector("#mashedPotatoes").innerHTML += `<li>${step0}</li>`;
     getInstruction("mashedPotatoes",1,(step1)=>{
     
@@ -45,6 +43,7 @@ getInstruction("mashedPotatoes",0,(step0)=>{
           
           document.querySelector("#mashedPotatoes").innerHTML += `<li>${step4}</li>`;
           document.querySelector("#mashedPotatoes").innerHTML +=`<li>Mashed potatoes are ready!</li>`;
+          document.querySelector("#mashedPotatoesImg").removeAttribute("hidden");
           },error => console.log(error))
         },error => console.log(error))
       },error => console.log(error))
@@ -56,7 +55,7 @@ getInstruction("mashedPotatoes",0,(step0)=>{
 
 obtainInstruction('steak', 0)
   .then( (step0) => {
-    document.querySelector("#steakImg").removeAttribute("hidden");
+    
     document.querySelector("#steak").innerHTML += `<li>${step0}</li>`;
     return obtainInstruction('steak',1);
   })
@@ -85,14 +84,14 @@ obtainInstruction('steak', 0)
     return obtainInstruction('steak',7);
   })
   .then( (step7) => {
-    // document.querySelector("#steak").innerHTML += `<li>${step7}</li>`;
     document.querySelector("#steak").innerHTML += `<li>Stake is ready!</li>`;
+    document.querySelector("#steakImg").removeAttribute("hidden");
   })
   .catch((error)=> console.log(error))
   // ... Your code here
 // Iteration 3 using async/await
 async function makeBroccoli(){
-  document.querySelector("#broccoliImg").removeAttribute("hidden");
+  
   try{
     for(let i=0;i<broccoli.length;i++){
       let step=await obtainInstruction('broccoli',i);
@@ -102,10 +101,28 @@ async function makeBroccoli(){
     console.log(error);
   }finally{
     document.querySelector("#broccoli").innerHTML += `<li>Broccoli is ready!</li>`;
+    document.querySelector("#broccoliImg").removeAttribute("hidden");
   }
 
 }
 makeBroccoli();
 
 // Bonus 2 - Promise all
-// ...
+
+const brusArr=[];
+for(let i=0; i<brusselsSprouts.length; i++){
+  brusArr.push(obtainInstruction('brusselsSprouts',i))
+}
+
+Promise.all(brusArr)
+  .then((promise)=>{
+    promise.forEach((step)=>{
+      document.querySelector("#brusselsSprouts").innerHTML += `<li>${step}</li>`;
+    })
+  })
+  .catch((error)=>{
+    console.log(error)
+  }).finally(()=>{
+    document.querySelector("#brusselsSprouts").innerHTML += `<li>Brussels sprouts are ready!</li>`;
+    document.querySelector("#brusselsSproutsImg").removeAttribute("hidden");
+  })
