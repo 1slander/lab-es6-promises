@@ -91,7 +91,21 @@ obtainInstruction('steak', 0)
   .catch((error)=> console.log(error))
   // ... Your code here
 // Iteration 3 using async/await
-// ...
+async function makeBroccoli(){
+  document.querySelector("#broccoliImg").removeAttribute("hidden");
+  try{
+    for(let i=0;i<broccoli.length;i++){
+      let step=await obtainInstruction('broccoli',i);
+    document.querySelector("#broccoli").innerHTML += `<li>${step}</li>`;
+    }
+  }catch (error){
+    console.log(error);
+  }finally{
+    document.querySelector("#broccoli").innerHTML += `<li>Broccoli is ready!</li>`;
+  }
+
+}
+makeBroccoli();
 
 // Bonus 2 - Promise all
 // ...
